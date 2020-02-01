@@ -6,6 +6,7 @@ var gapYMin = 100;
 var dead = false;
 var frameFreq = 100;
 var pipes = [];
+var verticalSpeed;
 
 function preload() {
   birdUpImg = loadImage('media/bird/bird-upflap.png');
@@ -27,23 +28,31 @@ function setup() {
 function draw() {
   image(bgImg, 0, 0);
   bird.show();
-  var verticalSpeed;
+  
 
-  if (bird.score > 100) {
-    frameFreq = 70;
+  if (bird.score >= 100 && bird.level == 2) {
+    frameFreq = 80;
     verticalSpeed = random(-2, 2);
+    pipes = [];
+    bird.level += 1;
+
   }
-  else if (bird.score > 50)
+  else if (bird.score >= 50 && bird.level == 1)
   {
-    frameFreq = 85;
+    frameFreq = 80;
     verticalSpeed = random(-1, 1);
+    pipes = [];
+    bird.level += 1;
   }
-  else if (bird.score > 25)
+  else if (bird.score >= 25 && bird.level == 0)
   {
-    frameFreq = 95;
+    frameFreq = 80;
     verticalSpeed = 0;
+    pipes = [];
+    bird.level += 1;
+
   }
-  else
+  else if (bird.level == 0)
   {
     frameFreq = 100;
     verticalSpeed = 0;
@@ -72,7 +81,8 @@ function draw() {
   fill(255);
   stroke(0);
   strokeWeight(3);
-  text("SCORE: " + bird.score, 5, height - 10);
+  text("LEVEL - " + bird.level, 5, height - 35);
+  text("SCORE - " + bird.score, 5, height - 10);
   strokeWeight(1);
 
   if (bird.dead) {

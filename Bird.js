@@ -1,6 +1,6 @@
 class Bird {
 
-  constructor(birdX, birdY, birdRadius, birdUp, birdMid, birdDown, jmp = -3, birdSpeed = 0, scr = 0, imgSize = 25, rot = 0) {
+  constructor(birdX, birdY, birdRadius, birdUp, birdMid, birdDown, jmp = -3, birdSpeed = 0, scr = 0, imgSize = 25, rot = 0, lvl = 0) {
     this.x = birdX;
     this.y = birdY;
     this.r = birdRadius;
@@ -14,6 +14,7 @@ class Bird {
     this.midImg = birdMid;
     this.downImg = birdDown;
     this.rotation = rot;
+    this.level = lvl;
   }
 
   show() {
@@ -51,6 +52,9 @@ class Bird {
     this.speed = 0;
     this.score = 0;
     this.dead = false;
+
+    // should it reset when the player dies? 
+    this.level = 0;
 
     return finalScore;
 
