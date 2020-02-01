@@ -1,6 +1,6 @@
 class Pipes
 {
-    constructor(gapHeight, gapY, topImg, botImg, gapX = width, w = 30, spd = -1.75, scrd = false)
+    constructor(gapHeight, gapY, topImg, botImg, vertSpd, spd = -1.75, gapX = width, w = 30, scrd = false)
     {
         this.w = w;
         this.gapHeight = gapHeight;
@@ -8,6 +8,7 @@ class Pipes
         this.gapY = gapY;
         this.x = width;
         this.speed = spd;
+        this.vertSpeed = vertSpd;
         this.scored = scrd;
         this.topPipeImg = topImg;
         this.botPipeImg = botImg;
@@ -32,6 +33,19 @@ class Pipes
     {
         this.x += this.speed;
         this.gapX += this.speed;
+
+        this.gapY += this.vertSpeed;
+
+        if (this.gapY > height - this.gapHeight * 2) 
+        {
+            this.vertSpeed *= -1;
+            this.gapY = height - this.gapHeight * 2;
+        }
+        if (this.gapY < this.gapHeight)
+        {
+            this.vertSpeed *= -1;
+            this.gapY = this.gapHeight;
+        }
     }
 
     outOfScreen()

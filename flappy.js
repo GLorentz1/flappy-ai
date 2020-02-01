@@ -4,10 +4,10 @@ var gapSizeMin = 100;
 var gapSizeMax = 150;
 var gapYMin = 100;
 var dead = false;
+var frameFreq = 100;
 var pipes = [];
 
-function preload()
-{
+function preload() {
   birdUpImg = loadImage('media/bird/bird-upflap.png');
   birdMidImg = loadImage('media/bird/bird-midflap.png');
   birdDownImg = loadImage('media/bird/bird-down.png');
@@ -20,61 +20,73 @@ function preload()
 
 function setup() {
   createCanvas(800, 600);
-  bird = new Bird(100, height/2 - 100, 27, birdUpImg, birdMidImg, birdDownImg); 
+  bird = new Bird(100, height / 2 - 100, 27, birdUpImg, birdMidImg, birdDownImg);
   // pipes.push(new Pipes(random(gapSizeMin, gapSizeMax), random(gapYMin, height - gapYMin))); 
 }
 
 function draw() {
   image(bgImg, 0, 0);
   bird.show();
+  var verticalSpeed;
 
-
-  if(frameCount % 100 == 0)
+  if (bird.score > 100) {
+    frameFreq = 70;
+    verticalSpeed = random(-2, 2);
+  }
+  else if (bird.score > 50)
   {
-    pipes.push(new Pipes(random(gapSizeMin, gapSizeMax), random(gapYMin, height - gapYMin), pipeTopImg, pipeBottomImg));
+    frameFreq = 85;
+    verticalSpeed = random(-1, 1);
+  }
+  else if (bird.score > 25)
+  {
+    frameFreq = 95;
+    verticalSpeed = 0;
+  }
+  else
+  {
+    frameFreq = 100;
+    verticalSpeed = 0;
   }
 
-  for (i = pipes.length - 1; i >= 0; i--)
-  {
+  if (frameCount % frameFreq == 0) {
+    pipes.push(new Pipes(random(gapSizeMin, gapSizeMax), random(gapYMin, height - gapYMin), pipeTopImg, pipeBottomImg, verticalSpeed));
+  }
+
+  for (i = pipes.length - 1; i >= 0; i--) {
     pipes[i].build();
     pipes[i].move();
-    if (pipes[i].score(bird))
-    {
+    if (pipes[i].score(bird)) {
       bird.increaseScore();
     }
-    
+
     bird.collide(pipes[i]);
 
-    if(pipes[i].outOfScreen())
-    {
+    if (pipes[i].outOfScreen()) {
       pipes.splice(i, 1);
     }
   }
-  
+
   fill(0);
   textSize(24);
   fill(255);
   stroke(0);
   strokeWeight(3);
-  text("SCORE: " + bird.score, 5 , height - 10);
+  text("SCORE: " + bird.score, 5, height - 10);
   strokeWeight(1);
 
-  if (bird.dead)
-  {
+  if (bird.dead) {
     bird.reborn();
     pipes = [];
 
   }
-  else
-  {
+  else {
     bird.move(gravity);
   }
 }
 
-function keyPressed()
-{
-  if (key == ' ')
-  {
+function keyPressed() {
+  if (key == ' ') {
     bird.fly();
   }
 }
