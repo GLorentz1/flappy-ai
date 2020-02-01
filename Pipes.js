@@ -21,12 +21,9 @@ class Pipes
 
         //draw top pipe
         image(this.topPipeImg, this.x, 0, this.w, dTop);
-        // fill(0, 255, 125);
-        // rect(this.x, 0, this.w, dTop);
 
         // //draw bottom pipe
         image(this.botPipeImg, this.x, dTop + this.gapHeight, this.w, dBottom);
-        // rect(this.x, dTop + this.gapHeight, this.w, dBottom);
     }
 
     move()

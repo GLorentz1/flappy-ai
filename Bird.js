@@ -1,6 +1,6 @@
 class Bird {
 
-  constructor(birdX, birdY, birdRadius, birdUp, birdMid, birdDown, jmp = -3, birdSpeed = 0, scr = 0, imgSize = 25) {
+  constructor(birdX, birdY, birdRadius, birdUp, birdMid, birdDown, jmp = -3, birdSpeed = 0, scr = 0, imgSize = 25, rot = 0) {
     this.x = birdX;
     this.y = birdY;
     this.r = birdRadius;
@@ -13,12 +13,21 @@ class Bird {
     this.upImg = birdUp;
     this.midImg = birdMid;
     this.downImg = birdDown;
+    this.rotation = rot;
   }
 
   show() {
-    image(this.currentImg, this.x - this.r/2, this.y - this.r/2, this.imgSize, this.imgSize);
-    // noFill();
-    // circle(this.x, this.y, this.r);
+    this.rotation = map(this.speed, -6, 6, - PI / 180 * 45, PI / 180 * 45);
+
+    translate(this.x, this.y);
+    rotate(this.rotation);
+    imageMode(CENTER);
+
+    image(this.currentImg, 0, 0, this.imgSize, this.imgSize);
+
+    imageMode(CORNER);
+    rotate(- this.rotation);
+    translate(-this.x, -this.y);
   }
 
   fly() {
