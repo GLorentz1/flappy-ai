@@ -1,6 +1,6 @@
 class Pipes
 {
-    constructor(gapHeight, gapY, gapX = width, w = 30, spd = -1.75, scrd = false)
+    constructor(gapHeight, gapY, topImg, botImg, gapX = width, w = 30, spd = -1.75, scrd = false)
     {
         this.w = w;
         this.gapHeight = gapHeight;
@@ -9,8 +9,8 @@ class Pipes
         this.x = width;
         this.speed = spd;
         this.scored = scrd;
-        // this.topPipeImg = topImg;
-        // this.botPipeImg = botImg;
+        this.topPipeImg = topImg;
+        this.botPipeImg = botImg;
     }
 
     build()
@@ -19,11 +19,13 @@ class Pipes
         var dBottom = dist(this.x, height, this.gapX, dTop + this.gapHeight);
 
         //draw top pipe
-        fill(0, 255, 125);
-        rect(this.x, 0, this.w, dTop);
+        image(this.topPipeImg, this.x, 0, this.w, dTop);
+        // fill(0, 255, 125);
+        // rect(this.x, 0, this.w, dTop);
 
-        //draw bottom pipe
-        rect(this.x, dTop + this.gapHeight, this.w, dBottom);
+        // //draw bottom pipe
+        image(this.botPipeImg, this.x, dTop + this.gapHeight, this.w, dBottom);
+        // rect(this.x, dTop + this.gapHeight, this.w, dBottom);
     }
 
     move()

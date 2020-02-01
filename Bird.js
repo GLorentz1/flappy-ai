@@ -1,19 +1,24 @@
 class Bird {
 
-  constructor(birdX, birdY, birdRadius, jmp = -3, birdSpeed = 0, scr = 0) {
+  constructor(birdX, birdY, birdRadius, birdUp, birdMid, birdDown, jmp = -3, birdSpeed = 0, scr = 0, imgSize = 25) {
     this.x = birdX;
     this.y = birdY;
     this.r = birdRadius;
+    this.imgSize = imgSize;
     this.jump = jmp;
     this.speed = birdSpeed;
     this.score = scr;
     this.dead = false;
+    this.currentImg = birdMid;
+    this.upImg = birdUp;
+    this.midImg = birdMid;
+    this.downImg = birdDown;
   }
 
   show() {
-    // image(this.currentImg, this.x, this.y, this.r, this.r);
-    noFill();
-    circle(this.x, this.y, this.r);
+    image(this.currentImg, this.x - this.r/2, this.y - this.r/2, this.imgSize, this.imgSize);
+    // noFill();
+    // circle(this.x, this.y, this.r);
   }
 
   fly() {
@@ -27,15 +32,18 @@ class Bird {
       this.speed = 2 * this.jump;
     }
     this.y += this.speed;
+    this.currentImg = this.upImg;
   }
 
   reborn()
   {
-    console.log(this.score);
+    var finalScore = this.score;
     this.y = height / 2 - 100;
     this.speed = 0;
     this.score = 0;
     this.dead = false;
+
+    return finalScore;
 
   }
 
@@ -53,6 +61,10 @@ class Bird {
       this.speed = 0;
     }
 
+    if(this.speed > 0)
+    {
+      this.currentImg = this.downImg;
+    }
     this.dead = this.y >= height;
 
   }
